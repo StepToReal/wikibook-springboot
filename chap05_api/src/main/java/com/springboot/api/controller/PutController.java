@@ -38,4 +38,12 @@ public class PutController {
                 .status(HttpStatus.CREATED)
                 .body(memberDto);
     }
+
+    @PutMapping(value = "/member4")
+    public ResponseEntity<String> postMember4(@RequestBody MemberDto memberDto) {
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(memberDto.toString());
+    }
+
 }
