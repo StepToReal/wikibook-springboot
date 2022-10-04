@@ -63,4 +63,10 @@ public class GetController {
     public String getRequestParam3(MemberDto memberDto) {
         return memberDto.toString();
     }
+
+    @GetMapping(value = "/request4")
+    //@RequestParam 을 생략한 경우 Spring 에서 자동 생성 해준다. 단 이때 required 는 false 이다. (@RequestParam 명시하면 required true)
+    public String getRequestParam4(String name, @RequestParam int age) {
+        return name + "(" + age + ")";
+    }
 }
