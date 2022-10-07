@@ -1,12 +1,12 @@
 package com.springboot.test.data.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
+@EqualsAndHashCode
 public class ChangeProductNameDto {
 
     private Long number;
