@@ -34,22 +34,22 @@ public class ProductRepositoryTest {
         product1.setName("펜");
         product1.setPrice(1000);
         product1.setStock(100);
-        product1.setCreatedAt(LocalDateTime.now());
-        product1.setUpdatedAt(LocalDateTime.now());
+//        product1.setCreatedAt(LocalDateTime.now());
+//        product1.setUpdatedAt(LocalDateTime.now());
 
         Product product2 = new Product();
         product2.setName("펜");
         product2.setPrice(5000);
         product2.setStock(300);
-        product2.setCreatedAt(LocalDateTime.now());
-        product2.setUpdatedAt(LocalDateTime.now());
+//        product2.setCreatedAt(LocalDateTime.now());
+//        product2.setUpdatedAt(LocalDateTime.now());
 
         Product product3 = new Product();
         product3.setName("펜");
         product3.setPrice(500);
         product3.setStock(50);
-        product3.setCreatedAt(LocalDateTime.now());
-        product3.setUpdatedAt(LocalDateTime.now());
+//        product3.setCreatedAt(LocalDateTime.now());
+//        product3.setUpdatedAt(LocalDateTime.now());
 
         Product savedProduct1 = productRepository.save(product1);
         Product savedProduct2 = productRepository.save(product2);
@@ -171,5 +171,19 @@ public class ProductRepositoryTest {
             System.out.println("Product Name : " + product);
             System.out.println("----------------------");
         }
+    }
+
+    @Test
+    public void auditingTest() {
+        Product product = new Product();
+        product.setName("펜");
+        product.setPrice(1000);
+        product.setStock(100);
+
+        Product savedProduct = productRepository.save(product);
+
+        System.out.println("productName : " + savedProduct.getName());
+        System.out.println("createAt : " + savedProduct.getCreatedAt());
+        System.out.println("updateAt : " + savedProduct.getUpdatedAt());
     }
 }
