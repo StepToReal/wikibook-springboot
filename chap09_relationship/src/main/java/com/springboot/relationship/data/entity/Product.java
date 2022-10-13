@@ -7,13 +7,13 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode (callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
 @Setter
 @Entity
 @Table(name = "product")
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,12 @@ public class Product extends BaseEntity{
     @Column(nullable = false)
     private Integer stock;
 
-    @OneToOne (mappedBy = "product")
+    @OneToOne(mappedBy = "product")
     @ToString.Exclude
     private ProductDetail productDetail;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    @ToString.Exclude
+    private Provider provider;
 }
