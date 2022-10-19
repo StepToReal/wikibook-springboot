@@ -21,7 +21,8 @@ public class Provider extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    // mappedBy: 양방향 관계일때 주인이 아닌 객체에 지정 (주인은 JoinColumn) value 값은 상대 엔터티의 연관 필드명
+    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
     @ToString.Exclude
     private List<Product> productList = new ArrayList<>();
 }
