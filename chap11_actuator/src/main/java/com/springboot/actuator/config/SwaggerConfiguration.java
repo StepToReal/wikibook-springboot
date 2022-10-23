@@ -16,7 +16,7 @@ public class SwaggerConfiguration {
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.springboot.valid_exception"))
+                .apis(RequestHandlerSelectors.basePackage("com.springboot.actuator"))
                 .paths(PathSelectors.any())
                 .build();
     }
