@@ -24,13 +24,21 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+/*
+ AuthenticationProvider 역할
+ 1. ProviderManager (AuthenticationManager) 로 부터 토큰을 받음
+ 2. UserDetailsService 에 토큰 전달 -> UserDetails 객체 받음
+ 3. AuthenticationProvider 에서 인증을 확인하고 인증이 성공되면 권한을 담은 토큰을 ProviderManager (AuthenticationManager) 로 반환
+
+ (여기서는 ProviderManager 과정이 생략된듯? Filter에서 토큰 생성에 필요한 정보를 받고 Filter로 인증에 성공한 토큰을 반환 하는 듯??)
+ */
 
     private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsService userDetailsService;
 
     @Value("${springboot.jwt.secret}")
     private String secretKey = "secretKey";
-    private final long tokenValidMillisecond = 1000L * 60 * 60;
+    private final long tokenValidMillisecond = 1000L * 60 * 60; // 1 hour
 
     @PostConstruct
     protected void init() {
@@ -56,7 +64,7 @@ public class JwtTokenProvider {
         return token;
     }
 
-    public Authentication getAuthentication(String token) {
+    public Authentication getAuthentication(String token) { // 인증이 성공 했을때 SecurityContextHolder 에 저장할 AuthenticationToken 생성
         LOGGER.info("[getAuthentication] 토큰 인증 정보 조회 시작");
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUsername(token));
         LOGGER.info("[getAuthentication] 토큰 인증 정보 조회 완료, UserDetails UserName : {}", userDetails.getUsername());
@@ -79,7 +87,8 @@ public class JwtTokenProvider {
         LOGGER.info("[validateToken] 토큰 유효 체크 시작");
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
+//            return !claims.getBody().getExpiration().before(new Date());
+            return claims.getBody().getExpiration().after(new Date());
         } catch (Exception e) {
             LOGGER.info("[validateToken] 토큰 유효 체크 예외 발생");
             return false;
