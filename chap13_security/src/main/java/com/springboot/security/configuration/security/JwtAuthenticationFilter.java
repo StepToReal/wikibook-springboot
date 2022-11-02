@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    /*
+    Filter 역할 (UsernamePasswordAuthenticationFilter 앞 단?)
+    토큰을 생성하고 유효성을 체크하고 인증된 토큰을 SecurityContextManager 에 저장함.
+     */
     private final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -34,6 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             LOGGER.info("[doFilterInternal] token 값 유효성 체크 완료");
         }
 
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(servletRequest, servletResponse); //doFilter 기준으로 앞 코드는 서블릿 실행 전, 뒤 코드는 서블릿 실행 후 실행 됨.
     }
 }
